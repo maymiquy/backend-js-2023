@@ -1,4 +1,5 @@
 # REPO TASK ACTIVITY COLLEGE BACKEND JAVA SCRIPT
 
-- update task via branchs
-- assement via branchs
+## pertemuan9
+
+<p>Introduction JS EgmaScript 6</p>
