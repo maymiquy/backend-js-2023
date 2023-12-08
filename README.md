@@ -1,5 +1,5 @@
 # REPO TASK ACTIVITY COLLEGE BACKEND JAVA SCRIPT
 
-## pertemuan9
+## pertemuan10
 
-<p>Introduction JS EgmaScript 6</p>
+<p>Asynchronous JS</p>
