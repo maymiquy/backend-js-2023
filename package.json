@@ -1,0 +1,16 @@
+{
+ "name": "task-pertemuan-11",
+ "version": "1.0.0",
+ "description": "Learn Express framework",
+ "main": "index.js",
+ "scripts": {
+  "start": "nodemon src/app.js"
+ },
+ "keywords": [],
+ "author": "maymiquy",
+ "license": "ISC",
+ "dependencies": {
+  "express": "^4.18.2",
+  "nodemon": "^3.0.2"
+ }
+}
