@@ -4,10 +4,10 @@ const router = require('./routes/api')
 const app = express()
 
 app.use(express.json())
-app.use(express.urlencoded())
 app.use(router)
 
-const port = 3000
+const port = process.env.APP_PORT
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}`)
 })

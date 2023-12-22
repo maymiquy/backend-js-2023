@@ -1,26 +1,26 @@
-const { request, response } = require('express')
-const students = require('../data/students')
+const Student = require('../models/Student')
+
 
 class StudentController {
-    index = (req, res) => {
+    index = async (req, res) => {
+        const students = await Student.getAllData()
         const response = {
             message: 'Menampilkan semua data student',
             data: students
         }
 
-        res.json(response)
+        res.status(200).json(response)
     }
 
-    store = (req, res) => {
-        const { name } = req.body
-        students.push(name)
-
+    store = async (req, res) => {
+        const { nama, nim, email, jurusan } = req.body
+        const students = await Student.createData(req.body)
         const response = {
-            message: `Menambahkan data student dengan nama: ${name}`,
+            message: 'Menambahkan data student',
             data: students
         }
 
-        res.json(response)
+        res.status(201).json(response)
     }
 
     update = (req, res) => {
