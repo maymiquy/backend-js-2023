@@ -4,51 +4,102 @@ const Student = require('../models/Student')
 class StudentController {
     index = async (req, res) => {
         const students = await Student.getAllData()
-        const response = {
-            message: 'Menampilkan semua data student',
-            data: students
-        }
 
-        res.status(200).json(response)
+        if (students.length > 0) {
+            const response = {
+                message: 'Berhasil menampilkan semua data student',
+                data: students
+            }
+            return res.status(200).json(response)
+        } else {
+            const response = {
+                message: 'Gagal menampilkan, data student belum tersedia',
+            }
+            return res.status(200).json(response)
+        }
     }
 
     store = async (req, res) => {
         const { nama, nim, email, jurusan } = req.body
-        const students = await Student.createData(req.body)
-        const response = {
-            message: 'Menambahkan data student',
-            data: students
-        }
+        const student = await Student.createData(req.body)
 
-        res.status(201).json(response)
+        if (!nama || !nim || !email || !jurusan) {
+            const response = {
+                message: 'Gagal menambahkan data student. Input data tidak lengkap!',
+            }
+
+            return res.status(422).json(response)
+        } else {
+            const response = {
+                message: 'Berhasil menambahkan data student',
+                data: student
+            }
+
+            return res.status(201).json(response)
+        }
     }
 
-    update = (req, res) => {
+    update = async (req, res) => {
         const { id } = req.params
-        const { name } = req.body
+        const student = await Student.getDataById(id)
 
-        students[id] = name
+        if (student) {
+            const studentUpdated = await Student.updateDataById(id, req.body)
 
-        const response = {
-            message: `Memperbarui data student id: ${id} dengan nama: ${name}`,
-            data: students
+            const response = {
+                message: 'Berhasil mengupdate data student',
+                data: studentUpdated
+            }
+
+            return res.status(200).json(response)
+        } else {
+            const error = {
+                message: 'Gagal mengupdate, Data tidak ditemukan (not found)',
+            }
+
+            return res.status(404).json(error)
         }
-
-        res.json(response)
     }
 
-    destroy = (req, res) => {
+    destroy = async (req, res) => {
         const { id } = req.params
-        const { name } = req.body
+        const student = await Student.getDataById(id)
 
-        students.splice(id, 1)
+        if (student) {
+            await Student.destroyDataById(id)
 
-        const response = {
-            message: `Menghapus data student id: ${id} dengan nama: ${name}`,
-            data: students
+            const response = {
+                message: 'Berhasil menghapus data student',
+            }
+
+            return res.status(200).json(response)
+        } else {
+            const error = {
+                message: 'Gagal menghapus, Data tidak ditemukan (not found)',
+            }
+
+            return res.status(404).json(error)
         }
+    }
 
-        res.json(response)
+    show = async (req, res) => {
+        const { id } = req.params
+        const student = await Student.getDataById(id)
+
+        if (student) {
+            const response = {
+                message: 'Berhasil menampilkan data student berdasrkan id',
+                data: student
+            }
+
+            return res.status(200).json(response)
+        } else {
+            const error = {
+                message: 'Gagal menampilkan, Data tidak ditemukan (not found)',
+            }
+
+            return res.status(404).json(error)
+        }
     }
 }
 
